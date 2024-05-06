@@ -1,0 +1,4 @@
+#Mon May 06 14:35:47 IST 2024
+base.0=D\:\\OUTDID\\Git\\outdid\\EV_APPLICATION\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
