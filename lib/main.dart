@@ -67,7 +67,7 @@ class _SessionHandlerState extends State<SessionHandler> {
   @override
   Widget build(BuildContext context) {
     return storedUser != null
-        ? const HomePage() 
+        ? HomePage(userinfo: storedUser)
         : const LoginPage(title: 'Login');
   }
 }

@@ -129,8 +129,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             },
-                            child: const Text(
-                              '390606004301',
+                            child: Text(
+                              '${widget.userinfo}',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black54,

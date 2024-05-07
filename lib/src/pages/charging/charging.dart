@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
 
 class chargingpage extends StatefulWidget {
-  const chargingpage({super.key});
+  const chargingpage({Key? key}) : super(key: key);
 
   @override
-  State<chargingpage> createState() => _chargingpageState();
+  State<chargingpage> createState() => _ChargingPageState();
 }
 
-class _chargingpageState extends State<chargingpage> {
+class _ChargingPageState extends State<chargingpage> {
   String activeTab = 'home'; // Initial active tab
 
   void setActiveTab(String newTab) {
@@ -42,6 +42,14 @@ class _chargingpageState extends State<chargingpage> {
     });
   }
 
+  bool isBatteryScreenVisible = false;
+
+  void toggleBatteryScreen() {
+    setState(() {
+      isBatteryScreenVisible = !isBatteryScreenVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +69,7 @@ class _chargingpageState extends State<chargingpage> {
                 style: TextStyle(fontSize: 20),
               ),
               const Text(
-                'Preparing',
+                'Status',
                 style: TextStyle(
                     color: Colors.green,
                     fontSize: 20,
@@ -78,89 +86,176 @@ class _chargingpageState extends State<chargingpage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    width: 100, // Set desired width
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        // This style uses a Material widget with a gradient background to give the ElevatedButton a gradient color
-                        backgroundColor: MaterialStateProperty.all(Colors
-                            .blueAccent), // Transparent because we're adding a custom Material with gradient
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.all(6.0)), // Optional padding
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20.0), // Rounded corners
-                          ),
+                  ElevatedButton(
+                    onPressed: toggleBatteryScreen,
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueAccent),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        elevation: MaterialStateProperty.all(
-                            4.0), // Button shadow/elevation
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(
-                            Icons.play_arrow,
-                            color: Colors.white,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Start',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 100, // Set desired width
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        // This style uses a Material widget with a gradient background to give the ElevatedButton a gradient color
-                        backgroundColor: MaterialStateProperty.all(Colors
-                            .redAccent), // Transparent because we're adding a custom Material with gradient
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.all(6.0)), // Optional padding
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20.0), // Rounded corners
+                    child: const Row(
+                      children: [
+                        Icon(Icons.play_arrow, color: Colors.white),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Start',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
-                        elevation: MaterialStateProperty.all(
-                            4.0), // Button shadow/elevation
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isBatteryScreenVisible = false;
+                      });
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.redAccent),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(
-                            Icons.square,
-                            color: Colors.white,
-                            size: 15,
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.square, color: Colors.white, size: 15),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Stop',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Stop',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
+              if (isBatteryScreenVisible) // Conditional rendering based on isBatteryScreenVisible
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      BatteryChargeScreen(),
+                      Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.green[300]!,
+                                      Colors.green[700]!
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 10,
+                                      offset: Offset(4, 4),
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(
+                                    16), // Optional padding
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceEvenly, // Evenly space the text elements
+                                  children: [
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.green[300]!,
+                                      Colors.green[700]!
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 10,
+                                      offset: Offset(4, 4),
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(
+                                    16), // Optional padding
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceEvenly, // Evenly space the text elements
+                                  children: [
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    Text(
+                                      'A',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               Padding(
-                padding: const EdgeInsets.only(top: 20.0, left: 17),
+                padding:
+                    const EdgeInsets.only(top: 20.0, left: 17, bottom: 100),
                 child: Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start, // Aligns contents to the start
@@ -344,5 +439,88 @@ class _chargingpageState extends State<chargingpage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
     );
+  }
+}
+
+class BatteryChargeScreen extends StatefulWidget {
+  @override
+  _BatteryChargeScreenState createState() => _BatteryChargeScreenState();
+}
+
+class _BatteryChargeScreenState extends State<BatteryChargeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+
+    _animation = Tween<double>(begin: 0, end: 100).animate(_animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _animationController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CustomPaint(
+        painter: BatteryPainter(_animation.value),
+        child: Container(
+          width: 200,
+          height: 70,
+        ),
+      ),
+    );
+  }
+}
+
+class BatteryPainter extends CustomPainter {
+  final double chargeLevel;
+
+  BatteryPainter(this.chargeLevel);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3;
+
+    // Draw battery body
+    final bodyRect = Rect.fromLTWH(10, 10, size.width - 20, size.height - 20);
+    canvas.drawRect(bodyRect, paint);
+
+    // Draw battery tip
+    final tipRect =
+        Rect.fromLTWH(size.width - 10, size.height / 2 - 10, 10, 20);
+    canvas.drawRect(tipRect, paint);
+
+    // Draw charge level
+    final chargePaint = Paint()
+      ..color = Colors.green
+      ..style = PaintingStyle.fill;
+
+    final chargeRect = Rect.fromLTWH(
+        15, 15, (size.width - 30) * (chargeLevel / 100), size.height - 30);
+    canvas.drawRect(chargeRect, chargePaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart'; // Import the CustomElevatedButton widget
 
 class WalletPage extends StatefulWidget {
-  final String? userinfo;
+  // final String storedUser;
 
-  const WalletPage({super.key, this.userinfo});
+  // const WalletPage({super.key, required this.storedUser});
 
   @override
   _WalletPageState createState() => _WalletPageState();
 }
 
 class _WalletPageState extends State<WalletPage> {
-  String activeTab = 'wallet'; // Track whether wallet icon is active
+  String activeTab = 'wallet';
+  
+  get storedUser => null; // Track whether wallet icon is active
 
   void _navigateToHomePage() {
     Navigator.pop(context); // Navigate back to the previous page
@@ -45,7 +47,7 @@ class _WalletPageState extends State<WalletPage> {
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
-        title: const Text('My Wallet'),
+        title: const Text('My Wallet, '),
       ),
       body: SingleChildScrollView(
         child: Column(
