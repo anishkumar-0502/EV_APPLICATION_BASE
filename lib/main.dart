@@ -8,25 +8,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Define your custom theme
     final ThemeData customTheme = ThemeData(
-      // Define the input field theme
       inputDecorationTheme: const InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.blue),
         ),
       ),
-      // Add more customizations as needed
     );
 
     return MaterialApp(
       title: 'EV',
       debugShowCheckedModeBanner: false,
-      // Apply your custom theme
       theme: customTheme,
       initialRoute: '/',
       routes: {
@@ -39,9 +35,8 @@ class MyApp extends StatelessWidget {
 
 class SessionHandler extends StatefulWidget {
   final bool loggedIn;
-  final String? userinfo; // Add userinfo parameter
 
-  const SessionHandler({super.key, this.loggedIn = false, this.userinfo});
+  const SessionHandler({Key? key, this.loggedIn = false}) : super(key: key);
 
   @override
   State<SessionHandler> createState() => _SessionHandlerState();
@@ -53,7 +48,6 @@ class _SessionHandlerState extends State<SessionHandler> {
   @override
   void initState() {
     super.initState();
-    // Retrieve user data from shared preferences when the app starts
     _retrieveUserData();
   }
 
