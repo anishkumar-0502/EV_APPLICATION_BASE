@@ -1,4 +1,4 @@
-#Sat May 04 18:03:12 IST 2024
-base.0=D\:\\OUTDID\\icon\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+#Tue May 07 12:48:53 IST 2024
+base.0=D\:\\OUTDID\\Git\\outdid\\EV_APPLICATION\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

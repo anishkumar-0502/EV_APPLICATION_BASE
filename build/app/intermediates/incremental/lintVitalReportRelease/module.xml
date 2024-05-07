@@ -1,11 +1,11 @@
 <lint-module
     format="1"
-    dir="D:\OUTDID\icon\android\app"
+    dir="D:\OUTDID\Git\outdid\EV_APPLICATION\android\app"
     name=":app"
     type="APP"
     maven="android:app:"
     gradle="7.3.0"
-    buildFolder="D:\OUTDID\icon\build\app"
+    buildFolder="D:\OUTDID\Git\outdid\EV_APPLICATION\build\app"
     bootClassPath="C:\Users\ANISH KUMAR\AppData\Local\Android\sdk\platforms\android-34\android.jar;C:\Users\ANISH KUMAR\AppData\Local\Android\sdk\build-tools\30.0.3\core-lambda-stubs.jar"
     javaSourceLevel="1.8"
     compileTarget="android-34">

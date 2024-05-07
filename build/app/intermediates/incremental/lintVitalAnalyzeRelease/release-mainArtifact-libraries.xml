@@ -1,13 +1,13 @@
 <libraries>
   <library
-      name="__local_aars__:D:\OUTDID\icon\build\app\intermediates\flutter\release\libs.jar:unspecified@jar"
-      jars="D:\OUTDID\icon\build\app\intermediates\flutter\release\libs.jar"
-      resolved="__local_aars__:D:\OUTDID\icon\build\app\intermediates\flutter\release\libs.jar:unspecified"/>
+      name="__local_aars__:D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\flutter\release\libs.jar:unspecified@jar"
+      jars="D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\flutter\release\libs.jar"
+      resolved="__local_aars__:D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\flutter\release\libs.jar:unspecified"/>
   <library
-      name="D:\OUTDID\icon\android@@:shared_preferences_android::release"
-      jars="D:\OUTDID\icon\build\shared_preferences_android\.transforms\144f630c030413d35a6d2cd8bd7de338\transformed\out\jars\classes.jar;D:\OUTDID\icon\build\shared_preferences_android\.transforms\144f630c030413d35a6d2cd8bd7de338\transformed\out\jars\libs\R.jar"
+      name="D:\OUTDID\Git\outdid\EV_APPLICATION\android@@:shared_preferences_android::release"
+      jars="D:\OUTDID\Git\outdid\EV_APPLICATION\build\shared_preferences_android\.transforms\2d6591e675c075440806cb32b61ac7bf\transformed\out\jars\classes.jar;D:\OUTDID\Git\outdid\EV_APPLICATION\build\shared_preferences_android\.transforms\2d6591e675c075440806cb32b61ac7bf\transformed\out\jars\libs\R.jar"
       resolved="io.flutter.plugins.sharedpreferences:shared_preferences_android:unspecified"
-      folder="D:\OUTDID\icon\build\shared_preferences_android\.transforms\144f630c030413d35a6d2cd8bd7de338\transformed\out"
+      folder="D:\OUTDID\Git\outdid\EV_APPLICATION\build\shared_preferences_android\.transforms\2d6591e675c075440806cb32b61ac7bf\transformed\out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -17,10 +17,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="D:\OUTDID\icon\android@@:fluttertoast::release"
-      jars="D:\OUTDID\icon\build\fluttertoast\.transforms\24486c85007205c5c11fbf5d75179ba1\transformed\out\jars\classes.jar;D:\OUTDID\icon\build\fluttertoast\.transforms\24486c85007205c5c11fbf5d75179ba1\transformed\out\jars\libs\R.jar"
+      name="D:\OUTDID\Git\outdid\EV_APPLICATION\android@@:fluttertoast::release"
+      jars="D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\.transforms\09634d49ffe29461bfaf51c03e361cd0\transformed\out\jars\classes.jar;D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\.transforms\09634d49ffe29461bfaf51c03e361cd0\transformed\out\jars\libs\R.jar"
       resolved="com.example.FlutterToast:fluttertoast:unspecified"
-      folder="D:\OUTDID\icon\build\fluttertoast\.transforms\24486c85007205c5c11fbf5d75179ba1\transformed\out"
+      folder="D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\.transforms\09634d49ffe29461bfaf51c03e361cd0\transformed\out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"

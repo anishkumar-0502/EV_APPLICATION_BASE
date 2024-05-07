@@ -54,7 +54,7 @@ class _SessionHandlerState extends State<SessionHandler> {
   Future<void> _retrieveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      storedUser = prefs.getString('user');
+      storedUser = prefs.getString('user') ?? '';
     });
   }
 

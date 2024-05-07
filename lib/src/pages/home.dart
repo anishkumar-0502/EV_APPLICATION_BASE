@@ -3,8 +3,7 @@ import '../components/elevationbutton.dart'; // Correct import
 import './charging/charging.dart';
 
 class HomePage extends StatefulWidget {
-  final String? userinfo;
-
+  final String? userinfo ;
   const HomePage({super.key, this.userinfo});
 
   @override
