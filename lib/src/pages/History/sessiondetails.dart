@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
 
 class sessiondetailspage extends StatefulWidget {
-    final String? username; // Make the username parameter nullable
-  const sessiondetailspage({super.key, this.username});
+  final String? username; // Make the username parameter nullable
+  final Map<String, dynamic> sessionData;
+  const sessiondetailspage({Key? key, this.username, required this.sessionData})
+      : super(key: key);
 
   @override
   State<sessiondetailspage> createState() => _sessiondetailspageState();
@@ -22,12 +24,14 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
 
   @override
   Widget build(BuildContext context) {
-        String? username = widget.username;
+    String? username = widget.username;
+    Map<String, dynamic> sessionData = widget.sessionData;
 
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text('Session Details'),
       ),
       body: SingleChildScrollView(
@@ -58,12 +62,17 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildDetailRow('Charger ID', '390606004655'),
-                    _buildDetailRow('Charger Session ID', '2918694'),
-                    _buildDetailRow('Start Time', '5/3/2024, 2:58:51 PM'),
-                    _buildDetailRow('Stop Time', '5/3/2024, 2:58:51 PM'),
-                    _buildDetailRow('Unit Consumed', '0.000'),
-                    _buildDetailRow('Price', 'RS.0.00'),
+                    _buildDetailRow(
+                        'Charger ID', sessionData['ChargerID'].toString()),
+                    _buildDetailRow('Charger Session ID',
+                        sessionData['ChargingSessionID'].toString()),
+                    _buildDetailRow(
+                        'Start Time', sessionData['StartTimestamp'].toString()),
+                    _buildDetailRow(
+                        'Stop Time', sessionData['StopTimestamp'].toString()),
+                    _buildDetailRow('Unit Consumed',
+                        sessionData['Unitconsumed'].toString()),
+                    _buildDetailRow('Price', 'Rs. ${sessionData['price']}'),
                   ],
                 ),
               )

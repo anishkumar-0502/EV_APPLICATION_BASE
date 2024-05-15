@@ -115,6 +115,7 @@ class _WalletPageState extends State<WalletPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text('My Wallet'),
       ),
       body: SingleChildScrollView(
@@ -169,30 +170,27 @@ class _WalletPageState extends State<WalletPage> {
             ),
 
             // Recharge section
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-              child: Row(
-                children: [
-                  Text(
-                    'Recharge ',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: 10.0),
-                  Icon(Icons.currency_rupee),
-                ],
-              ),
-            ),
-            // Amount buttons
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildAmountContainer('Rs.500'),
-                  _buildAmountContainer('Rs.1000'),
-                  _buildAmountContainer('Rs.2000'),
-                ],
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    const Text(
+                      'Recharge ',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    const SizedBox(width: 10.0),
+                    const Icon(Icons.currency_rupee),
+                    const SizedBox(width: 20),
+                    _buildAmountContainer('Rs.500'),
+                    const SizedBox(width: 10),
+                    _buildAmountContainer('Rs.1000'),
+                    const SizedBox(width: 10),
+                    _buildAmountContainer('Rs.2000'),
+                  ],
+                ),
               ),
             ),
             // Text Field and Submit Button Row
@@ -268,79 +266,110 @@ class _WalletPageState extends State<WalletPage> {
             const SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 80),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white70,
-                  borderRadius: BorderRadius.circular(27.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(20.0),
-                child: Center(
-                  child: Scrollbar(
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: transactionDetails.map((transaction) {
-                        return Column(
-                          children: [
-                            GestureDetector(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+              child: transactionDetails.isEmpty
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(27.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      child: const Center(
+                        child: Text(
+                          'history not found.',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      // Display transaction history if available
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(27.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
+                        child: Scrollbar(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: transactionDetails.length,
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> transaction =
+                                  transactionDetails[index];
+                              return Column(
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  GestureDetector(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          transaction['status'],
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.bold,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                transaction['status'],
+                                                style: const TextStyle(
+                                                  fontSize: 22,
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                transaction['time'],
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black54,
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
                                         Text(
-                                          transaction['time'],
-                                          style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54,
+                                          '- Rs. ${transaction['amount']}',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: transaction['status'] ==
+                                                    'Credited'
+                                                ? Colors.green
+                                                : Colors.red,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
-                                  Text(
-                                    '- Rs. ${transaction['amount']}',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: transaction['status'] == 'Credited'
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
+                                  if (index != transactionDetails.length - 1)
+                                    const Divider(),
                                 ],
-                              ),
-                            ),
-                            const Divider(), // Add a Divider widget after each Row
-                          ],
-                        );
-                      }).toList(),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),
@@ -349,10 +378,6 @@ class _WalletPageState extends State<WalletPage> {
         activeTab: activeTab,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-      // bottomNavigationBar: CustomElevatedButton(
-      //   context: context,
-      //   activeTab: activeTab,
-      // ),
     );
   }
 }

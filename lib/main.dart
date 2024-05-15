@@ -52,11 +52,7 @@ class _SessionHandlerState extends State<SessionHandler> {
 
     // Access UserData provider and update user data
     Provider.of<UserData>(context, listen: false).updateUserData(storedUser);
-  
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

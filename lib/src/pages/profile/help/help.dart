@@ -25,6 +25,8 @@ class _HelpPageState extends State<HelpPage> {
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
+        backgroundColor: Colors.white,
+
         title: const Text('Help'), // Proper use of 'const'
       ),
       body: Column(

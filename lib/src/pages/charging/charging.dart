@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
 
 class chargingpage extends StatefulWidget {
-    final String? username; // Make the username parameter nullable
+  final String? username; // Make the username parameter nullable
   const chargingpage({Key? key, this.username}) : super(key: key);
 
   @override
@@ -53,10 +53,11 @@ class _ChargingPageState extends State<chargingpage> {
 
   @override
   Widget build(BuildContext context) {
-        String? username = widget.username;
+    String? username = widget.username;
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text('Charging Dashboard'),
       ),
       body: SingleChildScrollView(

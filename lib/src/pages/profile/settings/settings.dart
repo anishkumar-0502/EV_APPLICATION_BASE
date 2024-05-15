@@ -69,6 +69,7 @@ class _settingspageState extends State<ProfileSettingPage> {
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text('Settings'),
       ),
       body: SingleChildScrollView(

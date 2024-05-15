@@ -54,6 +54,8 @@ void _logout(BuildContext context) async {
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
+                backgroundColor: Colors.white,
+
         title: const Text('Profile'),
       ),
       body: Center(
