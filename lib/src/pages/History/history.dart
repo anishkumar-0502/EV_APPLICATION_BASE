@@ -5,7 +5,8 @@ import '../../components/elevationbutton.dart';
 import 'sessiondetails.dart';
 
 class historypage extends StatefulWidget {
-  const historypage({super.key});
+  final String? username; // Make the username parameter nullable
+  const historypage({super.key, this.username});
 
   @override
   State<historypage> createState() => _historypageState();
@@ -23,6 +24,8 @@ class _historypageState extends State<historypage> {
 
   @override
   Widget build(BuildContext context) {
+        String? username = widget.username;
+
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
 

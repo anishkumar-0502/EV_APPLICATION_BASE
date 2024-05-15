@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import '../../utilities/User_Model/user.dart';
 import '../Home.dart';
 import 'register.dart';
 
@@ -49,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('user', username);
+        Provider.of<UserData>(context, listen: false).updateUserData(username);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const HomePage()),
         );

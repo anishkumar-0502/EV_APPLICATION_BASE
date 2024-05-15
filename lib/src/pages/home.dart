@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../components/elevationbutton.dart'; // Correct import
 import './charging/charging.dart';
 
+
 class HomePage extends StatefulWidget {
-  final String? userinfo ;
+  final String? userinfo;
   const HomePage({super.key, this.userinfo});
 
   @override
@@ -22,6 +23,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // final userData = Provider.of<UserData>(context);
+
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
       body: Column(
@@ -124,12 +127,13 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => chargingpage(),
+                                  builder: (context) => const chargingpage(),
                                 ),
                               );
                             },
-                            child: Text(
-                              '${widget.userinfo}',
+                            child: const Text(
+                              // '${userData.username}',
+                              "12331231231231",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black54,
@@ -142,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => chargingpage(),
+                                  builder: (context) => const chargingpage(),
                                 ),
                               );
                             },
@@ -160,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => chargingpage(),
+                                  builder: (context) => const chargingpage(),
                                 ),
                               );
                             },
@@ -178,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => chargingpage(),
+                                  builder: (context) => const chargingpage(),
                                 ),
                               );
                             },

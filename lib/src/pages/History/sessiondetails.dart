@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
 
 class sessiondetailspage extends StatefulWidget {
-  const sessiondetailspage({super.key});
+    final String? username; // Make the username parameter nullable
+  const sessiondetailspage({super.key, this.username});
 
   @override
   State<sessiondetailspage> createState() => _sessiondetailspageState();
@@ -21,6 +22,8 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
 
   @override
   Widget build(BuildContext context) {
+        String? username = widget.username;
+
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
 

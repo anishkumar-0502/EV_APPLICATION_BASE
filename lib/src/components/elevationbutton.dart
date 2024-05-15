@@ -3,9 +3,11 @@ import '../pages/home.dart'; // Adjust to your project's structure
 import '../pages/Wallet/wallet.dart';
 import '../pages/History/history.dart'; // Adjust import paths accordingly
 import '../pages/profile/profile.dart';
+import '../utilities/User_Model/user.dart'; // Import the UserData model
+import 'package:provider/provider.dart';
 
 class FloatingButton extends StatefulWidget {
-  const FloatingButton({Key? key, required this.activeTab}) : super(key: key);
+  const FloatingButton({super.key, required this.activeTab});
 
   final String activeTab;
 
@@ -23,6 +25,8 @@ class _FloatingButtonState extends State<FloatingButton> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context);
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 30.0,
@@ -42,7 +46,11 @@ class _FloatingButtonState extends State<FloatingButton> {
                 GestureDetector(
                   onTap: () {
                     if (widget.activeTab != 'home') {
-                      _navigateTo(context, const HomePage());
+                      _navigateTo(
+                          context,
+                          HomePage(
+                            userinfo: userData.username,
+                          ));
                     }
                   },
                   child: Column(
@@ -69,7 +77,11 @@ class _FloatingButtonState extends State<FloatingButton> {
                 GestureDetector(
                   onTap: () {
                     if (widget.activeTab != 'wallet') {
-                      _navigateTo(context, WalletPage());
+                      _navigateTo(
+                          context,
+                          WalletPage(
+                            username: userData.username,
+                          ));
                     }
                   },
                   child: Column(
@@ -96,7 +108,11 @@ class _FloatingButtonState extends State<FloatingButton> {
                 GestureDetector(
                   onTap: () {
                     if (widget.activeTab != 'history') {
-                      _navigateTo(context, const historypage());
+                      _navigateTo(
+                          context,
+                          historypage(
+                            username: userData.username,
+                          ));
                     }
                   },
                   child: Column(
@@ -123,7 +139,11 @@ class _FloatingButtonState extends State<FloatingButton> {
                 GestureDetector(
                   onTap: () {
                     if (widget.activeTab != 'profile') {
-                      _navigateTo(context, const profilepage());
+                      _navigateTo(
+                          context,
+                          profilepage(
+                            username: userData.username,
+                          ));
                     }
                   },
                   child: Column(

@@ -8,9 +8,11 @@ import '../History/history.dart';
 import './help/help.dart';
 import './settings/settings.dart';
 import '../Auth/login.dart';
-
+import '../../utilities/User_Model/user.dart'; // Import the UserData model
+import 'package:provider/provider.dart';
 class profilepage extends StatefulWidget {
-  const profilepage({super.key});
+  final String? username; // Make the username parameter nullable
+  const profilepage({super.key, this.username});
 
   @override
   State<profilepage> createState() => _profilepageState();
@@ -26,21 +28,28 @@ class _profilepageState extends State<profilepage> {
     });
   }
 
-  void _logout(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user'); // Remove the user data from shared preferences
-    // Navigate to the login page and remove all previous routes
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(title: 'LoginPage'),
-      ),
-      (route) => false,
-    );
-  }
+void _logout(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user'); // Remove the user data from shared preferences
+  
+  // Clear user data from the provider
+  Provider.of<UserData>(context, listen: false).clearUser();
+
+  // Navigate to the login page and remove all previous routes
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const LoginPage(title: 'LoginPage'),
+    ),
+    (route) => false,
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
+    String? username = widget.username;
+
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
 
@@ -54,9 +63,10 @@ class _profilepageState extends State<profilepage> {
               Icons.account_circle_rounded,
               size: 120,
             ),
-            const Text(
-              'User Name',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            Text(
+              username ??
+                  '', // Use username parameter, or an empty string if null
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
@@ -67,7 +77,10 @@ class _profilepageState extends State<profilepage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => WalletPage()),
+                        MaterialPageRoute(
+                            builder: (context) => WalletPage(
+                                  username: username,
+                                )),
                       );
                     },
                     child: Container(
@@ -107,7 +120,9 @@ class _profilepageState extends State<profilepage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const historypage()),
+                            builder: (context) => historypage(
+                                  username: username,
+                                )),
                       );
                     },
                     child: Container(

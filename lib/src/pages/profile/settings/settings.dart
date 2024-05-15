@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../components/elevationbutton.dart';
 
 class ProfileSettingPage extends StatefulWidget {
-  const ProfileSettingPage({super.key});
+  final String? username; // Make the username parameter nullable
+  const ProfileSettingPage({super.key, this.username});
 
   @override
   State<ProfileSettingPage> createState() => _settingspageState();
