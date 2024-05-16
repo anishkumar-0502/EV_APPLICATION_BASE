@@ -111,7 +111,6 @@ class _WalletPageState extends State<WalletPage> {
         }),
       );
       var data = json.decode(response.body);
-      print(response);
       print(data);
       Map<String, dynamic> options = {
         'key': 'rzp_test_dcep4q6wzcVYmr',
