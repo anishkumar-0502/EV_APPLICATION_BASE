@@ -2,20 +2,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart'; // Import the CustomElevatedButton widget
 import 'package:http/http.dart' as http;
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class WalletPage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
 
   const WalletPage({
-    super.key,
+    Key? key,
     this.username, // Mark the username parameter as nullable
-  });
+  }) : super(key: key);
 
   @override
   _WalletPageState createState() => _WalletPageState();
 }
 
 class _WalletPageState extends State<WalletPage> {
+  late Razorpay _razorpay;
   String activeTab = 'wallet';
   double? walletBalance;
   List<Map<String, dynamic>> transactionDetails =
@@ -24,6 +26,7 @@ class _WalletPageState extends State<WalletPage> {
   @override
   void initState() {
     super.initState();
+    _razorpay = Razorpay();
     fetchWallet(); // Fetch wallet balance when the page is initialized
     fetchTransactionDetails();
   }
@@ -61,7 +64,7 @@ class _WalletPageState extends State<WalletPage> {
     });
   }
 
-// Function to fetch transaction details
+  // Function to fetch transaction details
   void fetchTransactionDetails() async {
     String? username = widget.username;
     print('Fetching transaction details for user: $username ');
@@ -87,24 +90,101 @@ class _WalletPageState extends State<WalletPage> {
     }
   }
 
+  @override
+  void dispose() {
+    _razorpay.clear();
+    super.dispose();
+  }
+
+  void handlePayment(double amount) async {
+    String? username = widget.username;
+    const String currency = 'INR';
+    try {
+      var response = await http.post(
+        Uri.parse('http://122.166.210.142:8052/createOrder'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'amount': amount,
+          'currency': currency,
+        }),
+      );
+      var data = json.decode(response.body);
+      print(response);
+      print(data);
+      Map<String, dynamic> options = {
+        'key': 'rzp_test_dcep4q6wzcVYmr',
+        'amount': data['amount'],
+        'currency': data['currency'],
+        'name': 'Outdid Tech',
+        'description': 'Wallet Recharge',
+        'order_id': data['id'],
+        'handler': (response) async {
+          String resCode;
+
+          if (response['razorpay_payment_id'] != null) {
+            resCode = 'SUCCESS';
+          } else {
+            resCode = 'FAILED';
+          }
+
+          Map<String, dynamic> result = {
+            'user': username,
+            'RechargeAmt': data['amount'] ~/ 100,
+            'transactionId': response['razorpay_order_id'],
+            'responseCode': resCode,
+            'date_time': DateTime.now().toString(),
+          };
+
+          var output = await http.post(
+            Uri.parse('http://122.166.210.142:8052/savePayments'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(result),
+          );
+
+          var responseData = json.decode(output.body);
+          print(responseData);
+          if (responseData == 1) {
+            print('Payment successful !');
+          } else {
+            print('Payment details not saved !');
+          }
+        },
+        'prefill': {'name': username},
+        'theme': {'color': '#3399cc'},
+      };
+
+      var rzp = Razorpay();
+      rzp.open(options);
+    } catch (error) {
+      print('Error during payment: $error');
+    }
+  }
+
   // UI method to build the amount container widget
-  Widget _buildAmountContainer(String amount) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFB9AE),
-        borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(
-          color: Colors.red.withOpacity(0.5),
-          width: 1.0,
+  Widget _buildAmountContainer(double amount) {
+    return GestureDetector(
+      onTap: () {
+        handlePayment(amount);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFB9AE),
+          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(
+            color: Colors.red.withOpacity(0.5),
+            width: 1.0,
+          ),
         ),
-      ),
-      child: Text(
-        amount,
-        style: const TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.red,
+        child: Text(
+          'Rs. ${amount.toStringAsFixed(2)}',
+          style: const TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
         ),
       ),
     );
@@ -139,58 +219,66 @@ class _WalletPageState extends State<WalletPage> {
                 ),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 30.0, top: 10, bottom: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            walletBalance != null
-                                ? 'Rs. ${walletBalance?.toStringAsFixed(2)}'
-                                : 'Fetching...', // Display the wallet balance dynamically
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 30.0, top: 10, bottom: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              walletBalance != null
+                                  ? 'Rs. ${walletBalance?.toStringAsFixed(2)}'
+                                  : 'Fetching...', // Display the wallet balance dynamically
+                              style: const TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            'Balance',
-                            style: TextStyle(fontSize: 21),
-                          ),
-                        ],
+                            const SizedBox(height: 5),
+                            const Text(
+                              'Balance',
+                              style: TextStyle(fontSize: 21),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 130.0),
-                    const Icon(Icons.wallet_outlined, size: 63),
+                    const SizedBox(width: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                          right: 15.0), // Add padding to the right of the icon
+                      child: Icon(Icons.wallet_outlined, size: 63),
+                    ),
                   ],
                 ),
               ),
             ),
-
             // Recharge section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+              child: Row(
+                children: [
+                  Text(
+                    'Recharge ',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  SizedBox(width: 10.0),
+                  Icon(Icons.currency_rupee),
+                ],
+              ),
+            ),
+            // Amount buttons
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const Text(
-                      'Recharge ',
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    const SizedBox(width: 10.0),
-                    const Icon(Icons.currency_rupee),
-                    const SizedBox(width: 20),
-                    _buildAmountContainer('Rs.500'),
-                    const SizedBox(width: 10),
-                    _buildAmountContainer('Rs.1000'),
-                    const SizedBox(width: 10),
-                    _buildAmountContainer('Rs.2000'),
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildAmountContainer(500),
+                  _buildAmountContainer(1000),
+                  _buildAmountContainer(2000),
+                ],
               ),
             ),
             // Text Field and Submit Button Row
@@ -226,7 +314,7 @@ class _WalletPageState extends State<WalletPage> {
                         backgroundColor: const Color(0xFFC8F0CD),
 
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 12.0), // Button padding
+                            horizontal: 20.0, vertical: 12.0), // Button padding
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: const BorderSide(

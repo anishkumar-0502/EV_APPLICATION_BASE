@@ -10,6 +10,7 @@ import './settings/settings.dart';
 import '../Auth/login.dart';
 import '../../utilities/User_Model/user.dart'; // Import the UserData model
 import 'package:provider/provider.dart';
+
 class profilepage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
   const profilepage({super.key, this.username});
@@ -28,23 +29,22 @@ class _profilepageState extends State<profilepage> {
     });
   }
 
-void _logout(BuildContext context) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.remove('user'); // Remove the user data from shared preferences
-  
-  // Clear user data from the provider
-  Provider.of<UserData>(context, listen: false).clearUser();
+  void _logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user'); // Remove the user data from shared preferences
 
-  // Navigate to the login page and remove all previous routes
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const LoginPage(title: 'LoginPage'),
-    ),
-    (route) => false,
-  );
-}
+    // Clear user data from the provider
+    Provider.of<UserData>(context, listen: false).clearUser();
 
+    // Navigate to the login page and remove all previous routes
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(title: 'LoginPage'),
+      ),
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,7 @@ void _logout(BuildContext context) async {
       backgroundColor: Colors.white, // Set background color to white
 
       appBar: AppBar(
-                backgroundColor: Colors.white,
-
+        backgroundColor: Colors.white,
         title: const Text('Profile'),
       ),
       body: Center(

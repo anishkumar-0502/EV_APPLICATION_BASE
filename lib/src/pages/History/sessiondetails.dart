@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../components/elevationbutton.dart';
 
 class sessiondetailspage extends StatefulWidget {
@@ -38,13 +39,18 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
         child: Center(
           child: Column(
             children: [
-              Image.asset(
-                'assets/Image/CC.jpg',
-                height: 320,
+              Padding(
+                padding:
+                    EdgeInsets.only(top: 50.0), // Adjust the value as needed
+                child: Image.asset(
+                  'assets/Image/CC.jpg',
+                  height: 120,
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(
-                    bottom: 20), // Add margin at the bottom of the container
+                    bottom: 20,
+                    top: 50), // Add margin at the bottom of the container
                 width: 320,
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(

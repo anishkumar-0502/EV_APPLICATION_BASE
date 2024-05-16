@@ -31,27 +31,17 @@ class SessionHandler extends StatefulWidget {
 }
 
 class _SessionHandlerState extends State<SessionHandler> {
-  double? walletBalance;
-
   @override
   void initState() {
     super.initState();
     _retrieveUserData();
   }
 
-  // Method to set wallet balance
-  void setWalletBalance(double balance) {
-    setState(() {
-      walletBalance = balance;
-    });
-  }
-
   Future<void> _retrieveUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedUser = prefs.getString('user') ?? '';
-
+    String? storedUser = prefs.getString('user');
     // Access UserData provider and update user data
-    Provider.of<UserData>(context, listen: false).updateUserData(storedUser);
+    Provider.of<UserData>(context, listen: false).updateUserData(storedUser!);
   }
 
   @override
