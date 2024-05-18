@@ -41,7 +41,6 @@ class _WalletPageState extends State<WalletPage> {
   // Function to fetch wallet balance
   void fetchWallet() async {
     String? username = widget.username;
-    print('Fetching wallet balance for user: $username ');
 
     try {
       var response = await http.get(Uri.parse(
@@ -67,7 +66,6 @@ class _WalletPageState extends State<WalletPage> {
   // Function to fetch transaction details
   void fetchTransactionDetails() async {
     String? username = widget.username;
-    print('Fetching transaction details for user: $username ');
 
     try {
       var response = await http.get(Uri.parse(
@@ -373,7 +371,7 @@ class _WalletPageState extends State<WalletPage> {
                           'history not found.',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black54,
+                            color: Colors.red,
                           ),
                         ),
                       ),

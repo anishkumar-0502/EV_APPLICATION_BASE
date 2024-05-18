@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../components/elevationbutton.dart'; // Correct import
 import './charging/charging.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   final String? userinfo;
@@ -12,6 +14,93 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String activeTab = 'home'; // Initial active tab
+  List<String> recentSessionDetails = []; // To store the session details
+  String searchChargerID = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRecentSessionDetails(); // Fetch data when the widget initializes
+  }
+
+  void fetchRecentSessionDetails() async {
+    String? username = widget.userinfo;
+
+    try {
+      final response = await http.get(Uri.parse(
+          'http://122.166.210.142:8052/getRecentSessionDetails?username=$username'));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          recentSessionDetails = List<String>.from(
+              data['value']); // Assuming the response is a list of strings
+        });
+      } else {
+        throw Exception('Failed to load recent session details');
+      }
+    } catch (error) {
+      print('Error fetching Recent Charger: $error');
+    }
+  }
+
+  Future<void> handleSearchRequest(String searchChargerID) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://122.166.210.142:8052/SearchCharger'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(
+            {'searchChargerID': searchChargerID, 'Username': widget.userinfo}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        setState(() {
+          this.searchChargerID = searchChargerID;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                chargingpage(searchChargerID: searchChargerID),
+          ),
+        );
+      } else {
+        final errorData = json.decode(response.body);
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Error'),
+            content: Text(errorData['message']),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text(error.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void handleSearchRecent(String searchChargerID) async {
+    await handleSearchRequest(searchChargerID);
+  }
 
   void setActiveTab(String newTab) {
     // Define the callback
@@ -22,8 +111,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final userData = Provider.of<UserData>(context);
-
     return Scaffold(
       backgroundColor: Colors.white, // Set background color to white
       body: Column(
@@ -50,6 +137,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextField(
+                      onSubmitted: handleSearchRecent,
                       decoration: InputDecoration(
                         hintText: 'Enter DeviceID',
                         border: OutlineInputBorder(
@@ -64,21 +152,29 @@ class _HomePageState extends State<HomePage> {
                           vertical: 12.0,
                           horizontal: 16.0,
                         ),
-                        suffixIcon: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(24.0),
-                              bottomRight: Radius.circular(24.0),
+                        suffixIcon: GestureDetector(
+                          onTap: () => handleSearchRecent(searchChargerID),
+                          child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(24.0),
+                                bottomRight: Radius.circular(24.0),
+                              ),
+                              color: Colors.green,
                             ),
-                            color: Colors.green,
-                          ),
-                          child: const Icon(
-                            Icons.search,
-                            color: Colors.white,
+                            child: const Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchChargerID = value;
+                        });
+                      },
                     ),
                   ),
                   const Padding(
@@ -118,83 +214,55 @@ class _HomePageState extends State<HomePage> {
                       ),
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20.0, bottom: 18.0),
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const chargingpage(),
+                      child: recentSessionDetails.isEmpty
+                          ? const Center(
+                              child: Text(
+                                'Not yet used',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.red,
                                 ),
-                              );
-                            },
-                            child: const Text(
-                              // '${userData.username}',
-                              "390606004655",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
                               ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: recentSessionDetails.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => chargingpage(
+                                                searchChargerID:
+                                                    recentSessionDetails[
+                                                        index]),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            recentSessionDetails[index],
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    if (index !=
+                                        recentSessionDetails.length - 1)
+                                      const Divider(),
+                                  ],
+                                );
+                              },
                             ),
-                          ),
-                          const Divider(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const chargingpage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              '390606004655',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          const Divider(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const chargingpage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              '390606004656',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          const Divider(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const chargingpage(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              '390606004659',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],

@@ -35,7 +35,6 @@ class _historypageState extends State<historypage> {
   // Function to fetch charging session details
   void fetchChargingSessionDetails() async {
     String? username = widget.username;
-    print('Fetching charging session details for user: $username ');
 
     try {
       var response = await http.get(Uri.parse(
@@ -114,7 +113,7 @@ class _historypageState extends State<historypage> {
                             ' session history not found.',
                             style: TextStyle(
                               fontSize: 18,
-                              color: Colors.black54,
+                              color: Colors.red,
                             ),
                           ),
                         ),

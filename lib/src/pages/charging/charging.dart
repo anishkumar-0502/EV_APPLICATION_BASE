@@ -1,10 +1,16 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class chargingpage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
-  const chargingpage({Key? key, this.username}) : super(key: key);
+  final String searchChargerID;
+
+  const chargingpage({super.key, this.username, required this.searchChargerID});
 
   @override
   State<chargingpage> createState() => _ChargingPageState();
@@ -12,6 +18,58 @@ class chargingpage extends StatefulWidget {
 
 class _ChargingPageState extends State<chargingpage> {
   String activeTab = 'home'; // Initial active tab
+
+  late WebSocketChannel channel;
+  final List<String> messages = [];
+  String chargerStatus = '';
+  String timestamp = '';
+  @override
+  void initState() {
+    super.initState();
+    initializeWebSocket();
+  }
+
+  void initializeWebSocket() {
+    // Connect to the WebSocket server
+    channel = WebSocketChannel.connect(
+      Uri.parse('ws://122.166.210.142:7050'),
+    );
+
+    // Print WebSocket connection open message
+    print('WebSocket connection open');
+
+    // Listen for WebSocket events
+    channel.stream.listen(
+      (message) {
+        // Handle received message
+        final parsedMessage = jsonDecode(message);
+        setState(() {
+          messages.add(parsedMessage.toString());
+          chargerStatus = parsedMessage['status'];
+          timestamp = parsedMessage['timestamp'];
+        });
+        print('Received message: $parsedMessage');
+      },
+      onDone: () {
+        // Handle WebSocket connection close
+        print('WebSocket connection closed');
+        // Set the socket state to null if desired
+        // setSocket(null);
+      },
+      onError: (error) {
+        // Handle WebSocket error
+        print('WebSocket error: $error');
+        // Handle error as needed
+      },
+      cancelOnError: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
 
   void setActiveTab(String newTab) {
     // Define the callback
@@ -54,6 +112,7 @@ class _ChargingPageState extends State<chargingpage> {
   @override
   Widget build(BuildContext context) {
     String? username = widget.username;
+    String? ChargerID = widget.searchChargerID;
 
     return Scaffold(
       appBar: AppBar(
@@ -68,20 +127,20 @@ class _ChargingPageState extends State<chargingpage> {
                 'CHARGER STATUS',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
               ),
-              const Text(
-                '390606004655',
-                style: TextStyle(fontSize: 20),
+              Text(
+                ChargerID ??
+                    '', // Use username parameter, or an empty string if null                style: TextStyle(fontSize: 20),
               ),
-              const Text(
-                'Status',
-                style: TextStyle(
+              Text(
+                chargerStatus,
+                style: const TextStyle(
                     color: Colors.green,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              const Text(
-                '04/05/2024 14:59:04',
-                style: TextStyle(fontSize: 18),
+              Text(
+                timestamp,
+                style: const TextStyle(fontSize: 18),
               ),
               Image.asset(
                 'assets/Image/car-2.png',
