@@ -5,6 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
+
+String formatTimestamp(DateTime originalTimestamp) {
+  String day = originalTimestamp.day.toString().padLeft(2, '0');
+  String month = originalTimestamp.month.toString().padLeft(2, '0');
+  String year = originalTimestamp.year.toString();
+  String hours = originalTimestamp.hour.toString().padLeft(2, '0');
+  String minutes = originalTimestamp.minute.toString().padLeft(2, '0');
+  String seconds = originalTimestamp.second.toString().padLeft(2, '0');
+  return '$day/$month/$year $hours:$minutes:$seconds';
+}
 
 class chargingpage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
@@ -17,19 +28,121 @@ class chargingpage extends StatefulWidget {
 }
 
 class _ChargingPageState extends State<chargingpage> {
-  String activeTab = 'home'; // Initial active tab
-
+  String activeTab = 'home';
   late WebSocketChannel channel;
-  final List<String> messages = [];
+  
   String chargerStatus = '';
   String timestamp = '';
+  bool isTimeoutRunning = false;
+  bool isStarted = false;
+
+  void setIsStarted(bool value) {
+    setState(() {
+      isStarted = value;
+    });
+  }
+
+  void startTimeout() {
+    setState(() {
+      isTimeoutRunning = true;
+    });
+  }
+
+  void stopTimeout() {
+    setState(() {
+      isTimeoutRunning = false;
+    });
+  }
+
+  void appendStatusTime(String status, String currentTime) {
+    setState(() {
+      chargerStatus = status;
+      timestamp = currentTime;
+    });
+
+    // Enable/disable buttons based on chargerStatus
+    if (status == 'Preparing') {
+      // Enable start button
+      // Disable stop button
+    } else if (status == 'Charging') {
+      // Enable stop button
+      // Disable start button
+    }
+  }
+
+  Future<void> fetchLastStatus(String chargerID) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://122.166.210.142:8052/FetchLaststatus'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'id': chargerID}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final status = data['message']['status'];
+        final formattedTimestamp =
+            formatTimestamp(DateTime.parse(data['message']['timestamp']));
+
+        if (status == 'Available' || status == 'Unavailable') {
+          startTimeout();
+        }
+        if (status == 'Charging') {
+          setIsStarted(true);
+        }
+
+        setState(() {
+          chargerStatus = status;
+          timestamp = formattedTimestamp;
+        });
+
+        appendStatusTime(status, formattedTimestamp);
+      } else {
+        print('Failed to fetch status. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error while fetching status: $error');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final searchChargerID = widget.searchChargerID;
+      if (searchChargerID.isNotEmpty) {
+        fetchLastStatus(searchChargerID);
+      }
+    });
     initializeWebSocket();
   }
 
+  Future<void> endChargingSession(String chargerID) async {
+    print(chargerID);
+
+    try {
+      final Uri uri = Uri.parse(
+          'http://122.166.210.142:8052/endChargingSession?ChargerID=$chargerID');
+      final response = await http.get(uri);
+      print(response);
+      final datas = jsonDecode(response.body);
+      print(datas);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data);
+      } else {
+        print(
+            'Failed to end charging session. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error ending charging session: $error');
+    }
+  }
+
   void initializeWebSocket() {
+    String? chargerID = widget.searchChargerID;
+
     // Connect to the WebSocket server
     channel = WebSocketChannel.connect(
       Uri.parse('ws://122.166.210.142:7050'),
@@ -44,22 +157,20 @@ class _ChargingPageState extends State<chargingpage> {
         // Handle received message
         final parsedMessage = jsonDecode(message);
         setState(() {
-          messages.add(parsedMessage.toString());
           chargerStatus = parsedMessage['status'];
           timestamp = parsedMessage['timestamp'];
         });
         print('Received message: $parsedMessage');
       },
-      onDone: () {
+      onDone: () async {
         // Handle WebSocket connection close
         print('WebSocket connection closed');
-        // Set the socket state to null if desired
-        // setSocket(null);
+        await endChargingSession(chargerID);
+        print(chargerID);
       },
       onError: (error) {
         // Handle WebSocket error
         print('WebSocket error: $error');
-        // Handle error as needed
       },
       cancelOnError: true,
     );
@@ -67,19 +178,10 @@ class _ChargingPageState extends State<chargingpage> {
 
   @override
   void dispose() {
+    // Close the WebSocket connection
     channel.sink.close();
     super.dispose();
   }
-
-  void setActiveTab(String newTab) {
-    // Define the callback
-    setState(() {
-      activeTab = newTab;
-    });
-  }
-
-  bool isErrorVisible = false;
-  bool isThresholdVisible = false;
 
   void toggleErrorVisibility() {
     setState(() {
@@ -101,6 +203,8 @@ class _ChargingPageState extends State<chargingpage> {
     });
   }
 
+  bool isErrorVisible = false;
+  bool isThresholdVisible = false;
   bool isBatteryScreenVisible = false;
 
   void toggleBatteryScreen() {

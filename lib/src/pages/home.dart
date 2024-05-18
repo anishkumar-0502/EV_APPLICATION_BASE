@@ -232,15 +232,8 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => chargingpage(
-                                                searchChargerID:
-                                                    recentSessionDetails[
-                                                        index]),
-                                          ),
-                                        );
+                                        handleSearchRecent(
+                                            recentSessionDetails[index]);
                                       },
                                       child: Row(
                                         mainAxisAlignment:
