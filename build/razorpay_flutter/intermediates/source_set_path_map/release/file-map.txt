@@ -1,0 +1,27 @@
+com.razorpay.razorpay_flutter-jetified-window-1.0.0-beta04-0 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
+com.razorpay.razorpay_flutter-lifecycle-livedata-core-2.5.1-1 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\08e3c1416e9dac0acae1c24bfe9ac6e9\transformed\lifecycle-livedata-core-2.5.1\res
+com.razorpay.razorpay_flutter-jetified-play-services-wallet-18.1.3-2 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\121f73816b4eb3557b3bd7d9f36406d4\transformed\jetified-play-services-wallet-18.1.3\res
+com.razorpay.razorpay_flutter-jetified-window-java-1.0.0-beta04-3 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+com.razorpay.razorpay_flutter-lifecycle-runtime-2.5.1-4 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\1a935933a7516d6e9c6665303d4a2768\transformed\lifecycle-runtime-2.5.1\res
+com.razorpay.razorpay_flutter-fragment-1.5.7-5 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\29452fca93ea4b3edc5e6f01432f2023\transformed\fragment-1.5.7\res
+com.razorpay.razorpay_flutter-jetified-annotation-experimental-1.1.0-6 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
+com.razorpay.razorpay_flutter-lifecycle-viewmodel-2.5.1-7 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\53f06a3afe9c4ae74e89cf13d2d15784\transformed\lifecycle-viewmodel-2.5.1\res
+com.razorpay.razorpay_flutter-jetified-activity-1.5.1-8 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\8a72391f64d3cba1d071905fbea5489b\transformed\jetified-activity-1.5.1\res
+com.razorpay.razorpay_flutter-jetified-savedstate-1.2.0-9 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\93b2fe162feeddf86c57cc9f9fbf694c\transformed\jetified-savedstate-1.2.0\res
+com.razorpay.razorpay_flutter-jetified-checkout-1.6.39-10 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\9a0ce7a1d0f875aaec8b398c93008a38\transformed\jetified-checkout-1.6.39\res
+com.razorpay.razorpay_flutter-core-1.8.0-11 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\a2b50384b70976202bef0997ec6dfff6\transformed\core-1.8.0\res
+com.razorpay.razorpay_flutter-jetified-play-services-maps-17.0.0-12 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\abe0054456a924bfd6ad5871e9285872\transformed\jetified-play-services-maps-17.0.0\res
+com.razorpay.razorpay_flutter-jetified-play-services-basement-18.3.0-13 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\res
+com.razorpay.razorpay_flutter-jetified-lifecycle-viewmodel-savedstate-2.5.1-14 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\c716edde0156fdb489470c2308bd437c\transformed\jetified-lifecycle-viewmodel-savedstate-2.5.1\res
+com.razorpay.razorpay_flutter-jetified-play-services-base-18.3.0-15 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\res
+com.razorpay.razorpay_flutter-jetified-play-services-auth-21.1.0-16 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\ffce95d23675731d4ad5391b7aa187df\transformed\jetified-play-services-auth-21.1.0\res
+com.razorpay.razorpay_flutter-main-17 C:\Users\ANISH KUMAR\AppData\Local\Pub\Cache\hosted\pub.dev\razorpay_flutter-1.3.6\android\src\main\res
+com.razorpay.razorpay_flutter-release-18 C:\Users\ANISH KUMAR\AppData\Local\Pub\Cache\hosted\pub.dev\razorpay_flutter-1.3.6\android\src\release\res
+com.razorpay.razorpay_flutter-packaged_res-19 D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\intermediates\packaged_res\release
+com.razorpay.razorpay_flutter-packaged_res-20 D:\OUTDID\Git\outdid\EV_APPLICATION\build\package_info_plus\intermediates\packaged_res\release
+com.razorpay.razorpay_flutter-pngs-21 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\generated\res\pngs\release
+com.razorpay.razorpay_flutter-resValues-22 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\generated\res\resValues\release
+com.razorpay.razorpay_flutter-rs-23 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\generated\res\rs\release
+com.razorpay.razorpay_flutter-mergeReleaseResources-24 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.razorpay.razorpay_flutter-mergeReleaseResources-25 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.razorpay.razorpay_flutter-merged_res-26 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\intermediates\merged_res\release
