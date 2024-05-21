@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../components/elevationbutton.dart'; // Import the CustomElevatedButton widget
 import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:intl/intl.dart';
 
 class WalletPage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
@@ -44,7 +45,9 @@ class _WalletPageState extends State<WalletPage> {
 
     try {
       var response = await http.get(Uri.parse(
+          // 'http://192.168.1.33:8052/GetWalletBalance?username=$username'));
           'http://122.166.210.142:8052/GetWalletBalance?username=$username'));
+
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         setWalletBalance(data['balance'].toDouble()); // Cast to double
@@ -69,7 +72,9 @@ class _WalletPageState extends State<WalletPage> {
 
     try {
       var response = await http.get(Uri.parse(
+          // 'http://192.168.1.33:8052/getTransactionDetails?username=$username'));
           'http://122.166.210.142:8052/getTransactionDetails?username=$username'));
+
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         if (data['value'] is List) {
@@ -99,7 +104,7 @@ class _WalletPageState extends State<WalletPage> {
     const String currency = 'INR';
     try {
       var response = await http.post(
-        Uri.parse('http://122.166.210.142:8052/createOrder'),
+        Uri.parse('http://192.168.1.33:8052/createOrder'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -135,7 +140,7 @@ class _WalletPageState extends State<WalletPage> {
           };
 
           var output = await http.post(
-            Uri.parse('http://122.166.210.142:8052/savePayments'),
+            Uri.parse('http://192.168.1.33:8052/savePayments'),
             headers: {'Content-Type': 'application/json'},
             body: json.encode(result),
           );
@@ -166,17 +171,16 @@ class _WalletPageState extends State<WalletPage> {
         handlePayment(amount);
       },
       child: Container(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.2),
         decoration: BoxDecoration(
-          color: const Color(0xFFFFB9AE),
+          color: const Color.fromARGB(255, 255, 217, 212),
           borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(
-            color: Colors.red.withOpacity(0.5),
-            width: 1.0,
-          ),
+          // border: Border.all(
+          //   color: Colors.red.withOpacity(0.5),
+          // ),
         ),
         child: Text(
-          'Rs. ${amount.toStringAsFixed(2)}',
+          'Rs. ${amount.toStringAsFixed(0)}',
           style: const TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.bold,
@@ -267,8 +271,8 @@ class _WalletPageState extends State<WalletPage> {
             ),
             // Amount buttons
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+              padding: const EdgeInsets.only(
+                  left: 38.0, right: 30.0, top: 10.0, bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -288,6 +292,7 @@ class _WalletPageState extends State<WalletPage> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 17.0), // Apply left margin
                       child: TextField(
+                        textAlign: TextAlign.center, // Center the input text
                         decoration: InputDecoration(
                           hintText: 'Enter Amount', // Placeholder text
                           contentPadding: EdgeInsets.symmetric(
@@ -296,6 +301,7 @@ class _WalletPageState extends State<WalletPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(
                       width:
                           30.0), // Spacer between TextField and Submit button
@@ -308,16 +314,17 @@ class _WalletPageState extends State<WalletPage> {
                       },
                       style: TextButton.styleFrom(
                         // Text color of the button
-                        backgroundColor: const Color(0xFFC8F0CD),
+                        backgroundColor:
+                            const Color.fromARGB(255, 219, 249, 223),
 
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 12.0), // Button padding
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          side: const BorderSide(
-                            color: Colors.green, // Border color of the button
-                            width: 1.0, // Border width
-                          ),
+                          // side: const BorderSide(
+                          //   color: Colors.green, // Border color of the button
+                          //   width: 1.0, // Border width
+                          // ),
                         ),
                       ),
                       child: const Text(
@@ -354,7 +361,7 @@ class _WalletPageState extends State<WalletPage> {
               child: transactionDetails.isEmpty
                   ? Container(
                       decoration: BoxDecoration(
-                        color: Colors.white70,
+                        color: const Color.fromARGB(222, 255, 255, 255),
                         borderRadius: BorderRadius.circular(27.0),
                         boxShadow: [
                           BoxShadow(
@@ -379,7 +386,7 @@ class _WalletPageState extends State<WalletPage> {
                   : Container(
                       // Display transaction history if available
                       decoration: BoxDecoration(
-                        color: Colors.white70,
+                        color: const Color.fromARGB(222, 255, 255, 255),
                         borderRadius: BorderRadius.circular(27.0),
                         boxShadow: [
                           BoxShadow(
@@ -414,7 +421,7 @@ class _WalletPageState extends State<WalletPage> {
                                               Text(
                                                 transaction['status'],
                                                 style: const TextStyle(
-                                                  fontSize: 22,
+                                                  fontSize: 20,
                                                   color: Colors.black54,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -423,19 +430,25 @@ class _WalletPageState extends State<WalletPage> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                transaction['time'],
+                                                DateFormat(
+                                                        'MM/dd/yyyy, hh:mm:ss a')
+                                                    .format(
+                                                  DateTime.parse(
+                                                          transaction['time'])
+                                                      .toLocal(),
+                                                ),
                                                 style: const TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 11,
                                                   color: Colors.black54,
                                                 ),
-                                              )
+                                              ),
                                             ],
                                           ),
                                         ),
                                         Text(
                                           '- Rs. ${transaction['amount']}',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 19,
                                             color: transaction['status'] ==
                                                     'Credited'
                                                 ? Colors.green

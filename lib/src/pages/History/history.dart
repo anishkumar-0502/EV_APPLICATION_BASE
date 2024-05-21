@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -38,7 +38,9 @@ class _historypageState extends State<historypage> {
 
     try {
       var response = await http.get(Uri.parse(
+          // 'http://192.168.1.33:8052/getChargingSessionDetails?username=$username'));
           'http://122.166.210.142:8052/getChargingSessionDetails?username=$username'));
+
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         if (data['value'] is List) {
@@ -96,7 +98,7 @@ class _historypageState extends State<historypage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white70,
+                          color: const Color.fromARGB(222, 255, 255, 255),
                           borderRadius: BorderRadius.circular(27.0),
                           boxShadow: [
                             BoxShadow(
@@ -124,7 +126,7 @@ class _historypageState extends State<historypage> {
                           left: 20.0, right: 20, bottom: 80),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white70,
+                          color: const Color.fromARGB(222, 255, 255, 255),
                           borderRadius: BorderRadius.circular(27.0),
                           boxShadow: [
                             BoxShadow(
@@ -170,17 +172,25 @@ class _historypageState extends State<historypage> {
                                                   session['ChargerID']
                                                       .toString(),
                                                   style: const TextStyle(
-                                                    fontSize: 22,
+                                                    fontSize: 19,
                                                     color: Colors.black54,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                                 const SizedBox(height: 5),
                                                 Text(
-                                                  session['StartTimestamp']
-                                                      .toString(),
+                                                  session['StartTimestamp'] !=
+                                                          null
+                                                      ? DateFormat(
+                                                              'MM/dd/yyyy, hh:mm:ss a')
+                                                          .format(
+                                                          DateTime.parse(session[
+                                                                  'StartTimestamp'])
+                                                              .toLocal(),
+                                                        )
+                                                      : "-",
                                                   style: const TextStyle(
-                                                    fontSize: 15,
+                                                    fontSize: 13,
                                                     color: Colors.black54,
                                                   ),
                                                 )
@@ -190,13 +200,14 @@ class _historypageState extends State<historypage> {
                                           Text(
                                             '- Rs. ${session['price']}',
                                             style: const TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 19,
                                               color: Colors.red,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           )
                                         ],
                                       ),
+                                      const SizedBox(height: 5),
                                       if (index != SessionDetails.length - 1)
                                         const Divider(),
                                     ],

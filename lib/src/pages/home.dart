@@ -28,7 +28,9 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final response = await http.get(Uri.parse(
+          // 'http://192.168.1.33:8052/getRecentSessionDetails?username=$username'));
           'http://122.166.210.142:8052/getRecentSessionDetails?username=$username'));
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
@@ -46,7 +48,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> handleSearchRequest(String searchChargerID) async {
     try {
       final response = await http.post(
+        // Uri.parse('http://192.168.1.33:8052/SearchCharger'),
         Uri.parse('http://122.166.210.142:8052/SearchCharger'),
+
         headers: {'Content-Type': 'application/json'},
         body: json.encode(
             {'searchChargerID': searchChargerID, 'Username': widget.userinfo}),
@@ -198,10 +202,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 20.0),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 20.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white70,
+                        color: const Color.fromARGB(222, 255, 255, 255),
                         borderRadius: BorderRadius.circular(27.0),
                         boxShadow: [
                           BoxShadow(
@@ -215,12 +220,24 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20.0, bottom: 18.0),
                       child: recentSessionDetails.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'Not yet used',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.red,
+                          ? Container(
+                              padding: const EdgeInsets.all(14.0),
+                              child: const Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize
+                                      .min, // This ensures the column takes minimal space
+                                  children: [
+                                    SizedBox(
+                                        height:
+                                            9), // Add spacing above the text
+                                    Text(
+                                      'Yet to charge ',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        // color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             )
@@ -242,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                                           Text(
                                             recentSessionDetails[index],
                                             style: const TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color: Colors.black54,
                                             ),
                                           ),

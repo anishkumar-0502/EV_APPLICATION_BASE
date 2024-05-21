@@ -169,7 +169,8 @@ class _profilepageState extends State<profilepage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProfileSettingPage()),
+                        builder: (context) =>
+                            ProfileSettingPage(username: username)),
                   );
                 },
                 child: Container(

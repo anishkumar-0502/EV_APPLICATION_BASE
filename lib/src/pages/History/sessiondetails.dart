@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../../components/elevationbutton.dart';
+import 'package:intl/intl.dart';
 
 class sessiondetailspage extends StatefulWidget {
   final String? username; // Make the username parameter nullable
@@ -54,8 +55,7 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
                 width: 320,
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Colors.white70,
-                  borderRadius: BorderRadius.circular(12.0),
+                        color: const Color.fromARGB(222, 255, 255, 255),                  borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -73,9 +73,23 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
                     _buildDetailRow('Charger Session ID',
                         sessionData['ChargingSessionID'].toString()),
                     _buildDetailRow(
-                        'Start Time', sessionData['StartTimestamp'].toString()),
+                      'Start Time',
+                      sessionData['StartTimestamp'] != null
+                          ? DateFormat('MM/dd/yyyy, hh:mm:ss a').format(
+                              DateTime.parse(sessionData['StartTimestamp'])
+                                  .toLocal(),
+                            )
+                          : "-",
+                    ),
                     _buildDetailRow(
-                        'Stop Time', sessionData['StopTimestamp'].toString()),
+                      'Stop Time',
+                      sessionData['StopTimestamp'] != null
+                          ? DateFormat('MM/dd/yyyy, hh:mm:ss a').format(
+                              DateTime.parse(sessionData['StopTimestamp'])
+                                  .toLocal(),
+                            )
+                          : "-",
+                    ),
                     _buildDetailRow('Unit Consumed',
                         sessionData['Unitconsumed'].toString()),
                     _buildDetailRow('Price', 'Rs. ${sessionData['price']}'),

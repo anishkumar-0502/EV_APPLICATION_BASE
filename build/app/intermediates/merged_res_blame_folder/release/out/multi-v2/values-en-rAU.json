@@ -1,16 +1,33 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.icon.app-mergeReleaseResources-9:/values-en-rAU/values-en-rAU.xml",
+            "outputFile": "com.example.icon.app-mergeReleaseResources-22:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ANISH KUMAR\\.gradle\\caches\\transforms-3\\2579a7de00054bf46a8dbc332552f622\\transformed\\core-1.6.0\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "source": "C:\\Users\\ANISH KUMAR\\.gradle\\caches\\transforms-3\\a2b50384b70976202bef0997ec6dfff6\\transformed\\core-1.8.0\\res\\values-en-rAU\\values-en-rAU.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
                         "endColumns": "100",
                         "endOffsets": "151"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ANISH KUMAR\\.gradle\\caches\\transforms-3\\121f73816b4eb3557b3bd7d9f36406d4\\transformed\\jetified-play-services-wallet-18.1.3\\res\\values-en-rAU\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "206",
+                        "endColumns": "70",
+                        "endOffsets": "276"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "156",
+                        "endColumns": "74",
+                        "endOffsets": "226"
                     }
                 }
             ]

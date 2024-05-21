@@ -1,14 +1,29 @@
 com.example.icon.app-jetified-window-1.0.0-beta04-0 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\032f4dff274e516110d9363a9793a3e3\transformed\jetified-window-1.0.0-beta04\res
-com.example.icon.app-jetified-window-java-1.0.0-beta04-1 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
-com.example.icon.app-core-1.6.0-2 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\2579a7de00054bf46a8dbc332552f622\transformed\core-1.6.0\res
-com.example.icon.app-jetified-annotation-experimental-1.1.0-3 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
-com.example.icon.app-main-4 D:\OUTDID\Git\outdid\EV_APPLICATION\android\app\src\main\res
-com.example.icon.app-release-5 D:\OUTDID\Git\outdid\EV_APPLICATION\android\app\src\release\res
-com.example.icon.app-pngs-6 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\pngs\release
-com.example.icon.app-resValues-7 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\resValues\release
-com.example.icon.app-rs-8 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\rs\release
-com.example.icon.app-mergeReleaseResources-9 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\incremental\release\mergeReleaseResources\merged.dir
-com.example.icon.app-mergeReleaseResources-10 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\incremental\release\mergeReleaseResources\stripped.dir
-com.example.icon.app-merged_res-11 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\merged_res\release
-com.example.icon.app-packaged_res-12 D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\intermediates\packaged_res\release
-com.example.icon.app-packaged_res-13 D:\OUTDID\Git\outdid\EV_APPLICATION\build\shared_preferences_android\intermediates\packaged_res\release
+com.example.icon.app-lifecycle-livedata-core-2.5.1-1 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\08e3c1416e9dac0acae1c24bfe9ac6e9\transformed\lifecycle-livedata-core-2.5.1\res
+com.example.icon.app-jetified-play-services-wallet-18.1.3-2 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\121f73816b4eb3557b3bd7d9f36406d4\transformed\jetified-play-services-wallet-18.1.3\res
+com.example.icon.app-jetified-window-java-1.0.0-beta04-3 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\142c24f2530665bb6deb4123ab140714\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.icon.app-lifecycle-runtime-2.5.1-4 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\1a935933a7516d6e9c6665303d4a2768\transformed\lifecycle-runtime-2.5.1\res
+com.example.icon.app-fragment-1.5.7-5 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\29452fca93ea4b3edc5e6f01432f2023\transformed\fragment-1.5.7\res
+com.example.icon.app-jetified-annotation-experimental-1.1.0-6 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\3f96ca76068ab400b494bc7d541ee256\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.icon.app-lifecycle-viewmodel-2.5.1-7 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\53f06a3afe9c4ae74e89cf13d2d15784\transformed\lifecycle-viewmodel-2.5.1\res
+com.example.icon.app-jetified-activity-1.5.1-8 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\8a72391f64d3cba1d071905fbea5489b\transformed\jetified-activity-1.5.1\res
+com.example.icon.app-jetified-savedstate-1.2.0-9 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\93b2fe162feeddf86c57cc9f9fbf694c\transformed\jetified-savedstate-1.2.0\res
+com.example.icon.app-jetified-checkout-1.6.39-10 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\9a0ce7a1d0f875aaec8b398c93008a38\transformed\jetified-checkout-1.6.39\res
+com.example.icon.app-core-1.8.0-11 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\a2b50384b70976202bef0997ec6dfff6\transformed\core-1.8.0\res
+com.example.icon.app-jetified-play-services-maps-17.0.0-12 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\abe0054456a924bfd6ad5871e9285872\transformed\jetified-play-services-maps-17.0.0\res
+com.example.icon.app-jetified-play-services-basement-18.3.0-13 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\c3e05c9fbf3e6c63974105ad6d97e1f5\transformed\jetified-play-services-basement-18.3.0\res
+com.example.icon.app-jetified-lifecycle-viewmodel-savedstate-2.5.1-14 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\c716edde0156fdb489470c2308bd437c\transformed\jetified-lifecycle-viewmodel-savedstate-2.5.1\res
+com.example.icon.app-jetified-play-services-base-18.3.0-15 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\f08303a2cca72b52177966597c670619\transformed\jetified-play-services-base-18.3.0\res
+com.example.icon.app-jetified-play-services-auth-21.1.0-16 C:\Users\ANISH KUMAR\.gradle\caches\transforms-3\ffce95d23675731d4ad5391b7aa187df\transformed\jetified-play-services-auth-21.1.0\res
+com.example.icon.app-main-17 D:\OUTDID\Git\outdid\EV_APPLICATION\android\app\src\main\res
+com.example.icon.app-release-18 D:\OUTDID\Git\outdid\EV_APPLICATION\android\app\src\release\res
+com.example.icon.app-pngs-19 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\pngs\release
+com.example.icon.app-resValues-20 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\resValues\release
+com.example.icon.app-rs-21 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\generated\res\rs\release
+com.example.icon.app-mergeReleaseResources-22 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.example.icon.app-mergeReleaseResources-23 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.example.icon.app-merged_res-24 D:\OUTDID\Git\outdid\EV_APPLICATION\build\app\intermediates\merged_res\release
+com.example.icon.app-packaged_res-25 D:\OUTDID\Git\outdid\EV_APPLICATION\build\fluttertoast\intermediates\packaged_res\release
+com.example.icon.app-packaged_res-26 D:\OUTDID\Git\outdid\EV_APPLICATION\build\package_info_plus\intermediates\packaged_res\release
+com.example.icon.app-packaged_res-27 D:\OUTDID\Git\outdid\EV_APPLICATION\build\razorpay_flutter\intermediates\packaged_res\release
+com.example.icon.app-packaged_res-28 D:\OUTDID\Git\outdid\EV_APPLICATION\build\shared_preferences_android\intermediates\packaged_res\release

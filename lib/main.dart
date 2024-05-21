@@ -29,7 +29,6 @@ class SessionHandler extends StatefulWidget {
   @override
   State<SessionHandler> createState() => _SessionHandlerState();
 }
-
 class _SessionHandlerState extends State<SessionHandler> {
   @override
   void initState() {

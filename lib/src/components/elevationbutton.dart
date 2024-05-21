@@ -34,7 +34,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       ), // Additional padding for the floating button
       child: Material(
         borderRadius: BorderRadius.circular(25),
-        elevation: 5,
+        // elevation: 5,
         color: const Color(0xFFC8F0CD),
         child: InkWell(
           borderRadius: BorderRadius.circular(25),
