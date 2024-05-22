@@ -23,11 +23,17 @@ class _WalletPageState extends State<WalletPage> {
   double? walletBalance;
   List<Map<String, dynamic>> transactionDetails =
       []; // Define transactionDetails as an empty list
+  double? _lastPaymentAmount; // Store the last payment amount
+
+  TextEditingController _amountController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     fetchWallet(); // Fetch wallet balance when the page is initialized
     fetchTransactionDetails();
   }
@@ -96,6 +102,7 @@ class _WalletPageState extends State<WalletPage> {
   @override
   void dispose() {
     _razorpay.clear();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -104,12 +111,12 @@ class _WalletPageState extends State<WalletPage> {
     const String currency = 'INR';
     try {
       var response = await http.post(
-        Uri.parse('http://192.168.1.33:8052/createOrder'),
+        Uri.parse('http://122.166.210.142:8052/createOrder'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'amount': amount,
+          'amount': amount, // amount in paise
           'currency': currency,
         }),
       );
@@ -122,46 +129,61 @@ class _WalletPageState extends State<WalletPage> {
         'name': 'Outdid Tech',
         'description': 'Wallet Recharge',
         'order_id': data['id'],
-        'handler': (response) async {
-          String resCode;
-
-          if (response['razorpay_payment_id'] != null) {
-            resCode = 'SUCCESS';
-          } else {
-            resCode = 'FAILED';
-          }
-
-          Map<String, dynamic> result = {
-            'user': username,
-            'RechargeAmt': data['amount'] ~/ 100,
-            'transactionId': response['razorpay_order_id'],
-            'responseCode': resCode,
-            'date_time': DateTime.now().toString(),
-          };
-
-          var output = await http.post(
-            Uri.parse('http://192.168.1.33:8052/savePayments'),
-            headers: {'Content-Type': 'application/json'},
-            body: json.encode(result),
-          );
-
-          var responseData = json.decode(output.body);
-          print(responseData);
-          if (responseData == 1) {
-            print('Payment successful !');
-          } else {
-            print('Payment details not saved !');
-          }
-        },
         'prefill': {'name': username},
         'theme': {'color': '#3399cc'},
       };
+      _lastPaymentAmount = amount; // Store the amount
 
-      var rzp = Razorpay();
-      rzp.open(options);
+      _razorpay.open(options);
     } catch (error) {
       print('Error during payment: $error');
     }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    String? username = widget.username;
+    const String currency = 'INR';
+    try {
+      Map<String, dynamic> result = {
+        'user': username,
+        'RechargeAmt': _lastPaymentAmount, // Use the stored amount
+        'transactionId': response.orderId,
+        'responseCode': 'SUCCESS',
+        'date_time': DateTime.now().toString(),
+      };
+
+      var output = await http.post(
+        Uri.parse('http://122.166.210.142:8052/savePayments'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(result),
+      );
+
+      var responseData = json.decode(output.body);
+      print(responseData);
+      if (responseData == 1) {
+        print('Payment successful!');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WalletPage(
+              username: username,
+            ),
+          ),
+        );
+      } else {
+        print('Payment details not saved!');
+      }
+    } catch (error) {
+      print('Error saving payment details: $error');
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print('Error: ${response.message}');
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print('External Wallet: ${response.walletName}');
   }
 
   // UI method to build the amount container widget
@@ -288,43 +310,47 @@ class _WalletPageState extends State<WalletPage> {
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 17.0), // Apply left margin
+                      padding: const EdgeInsets.only(left: 17.0),
                       child: TextField(
-                        textAlign: TextAlign.center, // Center the input text
-                        decoration: InputDecoration(
-                          hintText: 'Enter Amount', // Placeholder text
+                        textAlign: TextAlign.center,
+                        keyboardType:
+                            TextInputType.number, // Set keyboard type to number
+                        decoration: const InputDecoration(
+                          hintText: 'Enter Amount',
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 12.0),
                         ),
+                        controller: _amountController, // Assign the controller
                       ),
                     ),
                   ),
-
-                  const SizedBox(
-                      width:
-                          30.0), // Spacer between TextField and Submit button
+                  const SizedBox(width: 30.0),
                   Padding(
                     padding: const EdgeInsets.only(right: 22.0),
                     child: TextButton(
                       onPressed: () {
                         // Handle submit button pressed
-                        // Implement your submit logic here
+                        // Extract amount from the text field and pass it to handlePayment function
+                        double amount =
+                            double.tryParse(_amountController.text) ?? 0.0;
+                        if (amount > 0) {
+                          handlePayment(amount);
+                          _amountController
+                              .clear(); // Clear the text field after submission
+                        } else {
+                          // Handle invalid input or amount
+                          // Display a message or take appropriate action
+                        }
                       },
                       style: TextButton.styleFrom(
-                        // Text color of the button
                         backgroundColor:
                             const Color.fromARGB(255, 219, 249, 223),
-
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0), // Button padding
+                            horizontal: 20.0, vertical: 12.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          // side: const BorderSide(
-                          //   color: Colors.green, // Border color of the button
-                          //   width: 1.0, // Border width
-                          // ),
                         ),
                       ),
                       child: const Text(
@@ -336,6 +362,7 @@ class _WalletPageState extends State<WalletPage> {
                 ],
               ),
             ),
+
             const Padding(
               padding: EdgeInsets.only(top: 30.0, left: 25),
               child: Row(
@@ -446,7 +473,7 @@ class _WalletPageState extends State<WalletPage> {
                                           ),
                                         ),
                                         Text(
-                                          '- Rs. ${transaction['amount']}',
+                                          '${transaction['status'] == 'Credited' ? '+ Rs. ' : '- Rs. '}${transaction['amount']}',
                                           style: TextStyle(
                                             fontSize: 19,
                                             color: transaction['status'] ==
