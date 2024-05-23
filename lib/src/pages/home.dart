@@ -6,7 +6,8 @@ import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   final String? userinfo;
-  const HomePage({super.key, this.userinfo});
+  final String? username; // Make the username parameter nullable
+  const HomePage({super.key, this.userinfo, this.username});
 
   @override
   State<HomePage> createState() => _HomePageState();

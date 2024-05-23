@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       var response = await http.post(
         // Uri.parse('http://192.168.1.33:8052/CheckLoginCredentials'),
-                Uri.parse('http://122.166.210.142:8052/CheckLoginCredentials'),
+        Uri.parse('http://122.166.210.142:8052/CheckLoginCredentials'),
 
         body: {
           'loginUsername': username,
@@ -55,7 +55,10 @@ class _LoginPageState extends State<LoginPage> {
         prefs.setString('user', username);
         Provider.of<UserData>(context, listen: false).updateUserData(username);
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    userinfo: username,
+                  )),
         );
       } else {
         _showDialog('Error', 'Login failed');
