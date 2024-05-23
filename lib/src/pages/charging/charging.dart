@@ -402,7 +402,7 @@ class _ChargingPageState extends State<chargingpage> {
 
   @override
   Widget build(BuildContext context) {
-    String? username = widget.username;
+    // String? username = widget.username;
     String? ChargerID = widget.searchChargerID;
 
     return Scaffold(

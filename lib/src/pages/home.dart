@@ -203,77 +203,84 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 20.0),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, bottom: 20.0),
+                        left: 20.0, right: 20.0, bottom: 100.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(222, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(27.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, bottom: 18.0),
-                      child: recentSessionDetails.isEmpty
-                          ? Container(
-                              padding: const EdgeInsets.all(14.0),
-                              child: const Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize
-                                      .min, // This ensures the column takes minimal space
-                                  children: [
-                                    SizedBox(
-                                        height:
-                                            9), // Add spacing above the text
-                                    Text(
-                                      'Yet to charge ',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        // color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: recentSessionDetails.length,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        handleSearchRecent(
-                                            recentSessionDetails[index]);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            recentSessionDetails[index],
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    if (index !=
-                                        recentSessionDetails.length - 1)
-                                      const Divider(),
-                                  ],
-                                );
-                              },
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(222, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(27.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
                             ),
-                    ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 18.0),
+                        child: recentSessionDetails.isEmpty
+                            ? Container(
+                                padding: const EdgeInsets.all(14.0),
+                                child: const Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize
+                                        .min, // This ensures the column takes minimal space
+                                    children: [
+                                      SizedBox(
+                                          height:
+                                              9), // Add spacing above the text
+                                      Text(
+                                        'Yet to charge ',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          // color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.only(top: 17.0),
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      for (int index = 0;
+                                          index < recentSessionDetails.length;
+                                          index++)
+                                        InkWell(
+                                          onTap: () {
+                                            handleSearchRecent(
+                                                recentSessionDetails[index]);
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    recentSessionDetails[index],
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.black54,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              if (index !=
+                                                  recentSessionDetails.length -
+                                                      1)
+                                                const Divider(),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              )),
                   ),
                 ],
               ),
@@ -288,4 +295,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-  

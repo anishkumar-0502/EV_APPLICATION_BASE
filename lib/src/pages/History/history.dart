@@ -123,7 +123,7 @@ class _historypageState extends State<historypage> {
                     )
                   : Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, right: 20, bottom: 80),
+                          left: 20.0, right: 20, bottom: 90),
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(222, 255, 255, 255),
@@ -139,86 +139,92 @@ class _historypageState extends State<historypage> {
                         ),
                         padding: const EdgeInsets.all(20.0),
                         child: Center(
-                          child: Scrollbar(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: SessionDetails.length,
-                              itemBuilder: (context, index) {
-                                Map<String, dynamic> session =
-                                    SessionDetails[index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            sessiondetailspage(
-                                                sessionData: session),
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  session['ChargerID']
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 19,
-                                                    color: Colors.black54,
-                                                    fontWeight: FontWeight.bold,
+                          child: Container(
+                            child: Column(
+                              children: [
+                                for (int index = 0;
+                                    index < SessionDetails.length;
+                                    index++)
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              sessiondetailspage(
+                                                  sessionData:
+                                                      SessionDetails[index]),
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    SessionDetails[index]
+                                                            ['ChargerID']
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 19,
+                                                      color: Colors.black54,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
-                                                ),
-                                                const SizedBox(height: 5),
-                                                Text(
-                                                  session['StartTimestamp'] !=
-                                                          null
-                                                      ? DateFormat(
-                                                              'MM/dd/yyyy, hh:mm:ss a')
-                                                          .format(
-                                                          DateTime.parse(session[
-                                                                  'StartTimestamp'])
-                                                              .toLocal(),
-                                                        )
-                                                      : "-",
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.black54,
-                                                  ),
-                                                )
-                                              ],
+                                                  const SizedBox(height: 5),
+                                                  Text(
+                                                    SessionDetails[index][
+                                                                'StartTimestamp'] !=
+                                                            null
+                                                        ? DateFormat(
+                                                                'MM/dd/yyyy, hh:mm:ss a')
+                                                            .format(
+                                                            DateTime.parse(
+                                                                    SessionDetails[
+                                                                            index]
+                                                                        [
+                                                                        'StartTimestamp'])
+                                                                .toLocal(),
+                                                          )
+                                                        : "-",
+                                                    style: const TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.black54,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            '- Rs. ${session['price']}',
-                                            style: const TextStyle(
-                                              fontSize: 19,
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                      if (index != SessionDetails.length - 1)
-                                        const Divider(),
-                                    ],
+                                            Text(
+                                              '- Rs. ${SessionDetails[index]['price']}',
+                                              style: const TextStyle(
+                                                fontSize: 19,
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(height: 5),
+                                        if (index != SessionDetails.length - 1)
+                                          const Divider(),
+                                      ],
+                                    ),
                                   ),
-                                );
-                              },
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    )
             ],
           ),
         ),

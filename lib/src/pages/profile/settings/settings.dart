@@ -379,6 +379,9 @@ class _settingspageState extends State<ProfileSettingPage> {
                               textAlign: TextAlign.center,
                               onChanged: (value) {
                                 updatePasswordField();
+                                if (value.isNotEmpty) {
+                                  FocusScope.of(context).nextFocus();
+                                }
                               },
                             ),
                           ),
@@ -389,6 +392,9 @@ class _settingspageState extends State<ProfileSettingPage> {
                               textAlign: TextAlign.center,
                               onChanged: (value) {
                                 updatePasswordField();
+                                if (value.isNotEmpty) {
+                                  FocusScope.of(context).nextFocus();
+                                }
                               },
                             ),
                           ),
@@ -399,6 +405,9 @@ class _settingspageState extends State<ProfileSettingPage> {
                               textAlign: TextAlign.center,
                               onChanged: (value) {
                                 updatePasswordField();
+                                if (value.isNotEmpty) {
+                                  FocusScope.of(context).nextFocus();
+                                }
                               },
                             ),
                           ),
@@ -409,6 +418,9 @@ class _settingspageState extends State<ProfileSettingPage> {
                               textAlign: TextAlign.center,
                               onChanged: (value) {
                                 updatePasswordField();
+                                if (value.isNotEmpty) {
+                                  FocusScope.of(context).nextFocus();
+                                }
                               },
                             ),
                           ),

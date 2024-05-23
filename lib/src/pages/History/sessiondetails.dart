@@ -55,13 +55,14 @@ class _sessiondetailspageState extends State<sessiondetailspage> {
                 width: 320,
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                        color: const Color.fromARGB(222, 255, 255, 255),                  borderRadius: BorderRadius.circular(12.0),
+                  color: const Color.fromARGB(222, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(27.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 6,
-                      offset: const Offset(2, 4),
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),

@@ -142,7 +142,6 @@ class _WalletPageState extends State<WalletPage> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     String? username = widget.username;
-    const String currency = 'INR';
     try {
       Map<String, dynamic> result = {
         'user': username,
@@ -427,70 +426,72 @@ class _WalletPageState extends State<WalletPage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Center(
                         child: Scrollbar(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: transactionDetails.length,
-                            itemBuilder: (context, index) {
-                              Map<String, dynamic> transaction =
-                                  transactionDetails[index];
-                              return Column(
-                                children: [
-                                  GestureDetector(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                transaction['status'],
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.black54,
-                                                  fontWeight: FontWeight.bold,
+                          child: Column(
+                            children: [
+                              for (int index = 0;
+                                  index < transactionDetails.length;
+                                  index++)
+                                Column(
+                                  children: [
+                                    GestureDetector(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  transactionDetails[index]
+                                                      ['status'],
+                                                  style: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black54,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                DateFormat(
-                                                        'MM/dd/yyyy, hh:mm:ss a')
-                                                    .format(
-                                                  DateTime.parse(
-                                                          transaction['time'])
-                                                      .toLocal(),
+                                                const SizedBox(
+                                                  height: 5,
                                                 ),
-                                                style: const TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black54,
+                                                Text(
+                                                  DateFormat(
+                                                          'MM/dd/yyyy, hh:mm:ss a')
+                                                      .format(
+                                                    DateTime.parse(
+                                                            transactionDetails[
+                                                                index]['time'])
+                                                        .toLocal(),
+                                                  ),
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.black54,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          '${transaction['status'] == 'Credited' ? '+ Rs. ' : '- Rs. '}${transaction['amount']}',
-                                          style: TextStyle(
-                                            fontSize: 19,
-                                            color: transaction['status'] ==
-                                                    'Credited'
-                                                ? Colors.green
-                                                : Colors.red,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ],
+                                          Text(
+                                            '${transactionDetails[index]['status'] == 'Credited' ? '+ Rs. ' : '- Rs. '}${transactionDetails[index]['amount']}',
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              color: transactionDetails[index]
+                                                          ['status'] ==
+                                                      'Credited'
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  if (index != transactionDetails.length - 1)
-                                    const Divider(),
-                                ],
-                              );
-                            },
+                                    if (index != transactionDetails.length - 1)
+                                      const Divider(),
+                                  ],
+                                ),
+                            ],
                           ),
                         ),
                       ),
